@@ -26,7 +26,9 @@ SOURCES += \
 	./Processor/Line/ProcessorMulti/Edit/ProcessorMulti_Processor_Line_PrivFunc.cpp	\
 	./Processor/Line/ProcessorMulti/NoEdit/ProcessorMulti_Processor_Line_PrivCoreFunc.cpp	\
 	./Processor/Line/VisualizationMono/Edit/VisualizationMono_Processor_Line_PrivFunc.cpp	\
-	./Processor/Line/VisualizationMono/NoEdit/VisualizationMono_Processor_Line_PrivCoreFunc.cpp	
+	./Processor/Line/VisualizationMono/NoEdit/VisualizationMono_Processor_Line_PrivCoreFunc.cpp	\
+	./Processor/Core/ProcessorMulti/Edit/ProcessorMulti_Processor_Core_PrivFunc.cpp	\
+	./Processor/Core/ProcessorMulti/NoEdit/ProcessorMulti_Processor_Core_PrivCoreFunc.cpp	
 
 HEADERS += \
 	./Sensor/xtion/SensorTimer/Edit/SensorTimer_Sensor_xtion_ParamsData.h	\
@@ -84,5 +86,9 @@ HEADERS += \
 	./Processor/Line/VisualizationMono/Edit/VisualizationMono_Processor_Line_ParamsData.h	\
 	./Processor/Line/VisualizationMono/Edit/VisualizationMono_Processor_Line_Vars.h	\
 	./Processor/Line/VisualizationMono/NoEdit/VisualizationMono_Processor_Line_PrivFunc.h	\
-	./Processor/Line/VisualizationMono/NoEdit/VisualizationMono_Processor_Line_PrivCoreFunc.h	
+	./Processor/Line/VisualizationMono/NoEdit/VisualizationMono_Processor_Line_PrivCoreFunc.h	\
+	./Processor/Core/ProcessorMulti/Edit/ProcessorMulti_Processor_Core_ParamsData.h	\
+	./Processor/Core/ProcessorMulti/Edit/ProcessorMulti_Processor_Core_Vars.h	\
+	./Processor/Core/ProcessorMulti/NoEdit/ProcessorMulti_Processor_Core_PrivFunc.h	\
+	./Processor/Core/ProcessorMulti/NoEdit/ProcessorMulti_Processor_Core_PrivCoreFunc.h	
 
