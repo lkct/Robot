@@ -1,6 +1,7 @@
 //You need to program this file.
 
 #include "../NoEdit/ProcessorMulti_Processor_Core_PrivFunc.h"
+#include <cmath>
 
 //*******************Please add static libraries in .pro file*******************
 //e.g. unix:LIBS += ... or win32:LIBS += ...
@@ -108,13 +109,32 @@ bool DECOFUNC(processMultiInputData)(void * paramsPtr, void * varsPtr, QVector<Q
 	E.g. outputPortIndex=QList<int>()<<(outportindex1)<<(outportindex2)...
 	*/
 
-    short steer = 0;
-    short speed = 200;
+    //inputdata_0                                             // EncoderIMU
+    //inputdata_1                                             // URG
+    //inputdata_2                                             // Xtion (RGB && depth)
+    //cv::imshow("color", inputdata_2.front()->cvColorImg);   // Show RGB image
+    //cv::imshow("depth", inputdata_2.front()->cvDepthImg);   // Show depth image
 
+    short steer = 100;           // [-400, 400]
+    short speed = 100;           // [-180, 180]
+
+    // Show RGB image && compass
+    double ori = - ((double)steer / 400.0) * (M_PI / 2.0);
+    cv::Mat img;
+    inputdata_2.front()->cvColorImg.copyTo(img);
+	cv::flip(img, img, 1);
+    cv::Point compass = cv::Point(100, 100);
+    cv::circle(img, compass, 80, cv::Scalar(0,255,0), 1, CV_AA);
+    cv::line(img, compass,
+             cv::Point(compass.x - sin(ori) * 80,
+                       compass.y - cos(ori) * 80),
+             cv::Scalar(0,255,0), 3, CV_AA);
+    cv::imshow("color", img);
 
     //--------------------------------------------
-    if (speed > 180) speed = 180;
-    if (speed < -180) speed = -180;
+    int maxSpeed = 180;
+    if (speed > maxSpeed) speed = maxSpeed;
+    if (speed < -maxSpeed) speed = -maxSpeed;
     char dataput[20];
     dataput[0] = 0xF8;
     dataput[1] = 4;

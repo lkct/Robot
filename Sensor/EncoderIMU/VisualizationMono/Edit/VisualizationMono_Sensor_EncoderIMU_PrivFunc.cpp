@@ -143,8 +143,8 @@ bool DECOFUNC(processMonoDrainData)(void * paramsPtr, void * varsPtr, QVector<vo
     cv::Point composso = cv::Point(params->mapSize - grid / 2, grid / 2);
     cv::circle(gridmap3, composso, grid / 2 - 1, c_green, 1, CV_AA);
     cv::line(gridmap3, composso,
-             cv::Point(composso.x + cos(-draindata.front()->orientation) * (grid - 1) / 2 - 1,
-                       composso.y - sin(-draindata.front()->orientation) * (grid - 1) / 2 - 1),
+             cv::Point(composso.x + sin(-draindata.front()->orientation) * (grid - 1) / 2 - 1,
+                       composso.y - cos(-draindata.front()->orientation) * (grid - 1) / 2 - 1),
              c_green, 1, CV_AA);
 
     gridmap3(cv::Rect(0, 0, 2 * grid - 1, grid - 1)).setTo(0);
