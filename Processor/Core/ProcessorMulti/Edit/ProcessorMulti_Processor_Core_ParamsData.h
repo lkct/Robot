@@ -57,7 +57,11 @@ public:
 	*/
 	ProcessorMulti_Processor_Core_Params() 
 	{
-		
+        baseSteer = 40;
+        filterWindow = 7;
+        Kp = 1;
+        Ki = 0;
+        Kd = 0;
 	}
 	/*! \fn ~ProcessorMulti_Processor_Core_Params()
 		\brief The destructor of ProcessorMulti_Processor_Core_Params. [required]
@@ -70,6 +74,9 @@ public:
 	}
 public:
 	//*******************Please add variables below*******************
+    short baseSteer;
+    int filterWindow;
+    double Kp, Ki, Kd;
 
 };
 

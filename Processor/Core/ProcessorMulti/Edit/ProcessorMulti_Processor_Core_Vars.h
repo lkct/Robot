@@ -22,6 +22,7 @@
 
 
 #include "ProcessorMulti_Processor_Core_ParamsData.h"
+#include "control.h"
 
 //The Vars is defined as below
 /*! \class ProcessorMulti_Processor_Core_Vars 
@@ -52,6 +53,7 @@ public:
 	}
 public:
 	//*******************Please add variables below*******************
+    PIDCtrl pid;
 
 };
 

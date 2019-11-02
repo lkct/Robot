@@ -19,7 +19,15 @@ bool DECOFUNC(setParamsVarsOpenNode)(QString qstrConfigName, QString qstrNodeTyp
 	2: initialize variables (vars).
 	3: If everything is OK, return 1 for successful opening and vice versa.
 	*/
-	
+    GetParamValue(xmlloader, params, baseSteer);
+    GetParamValue(xmlloader, params, filterWindow);
+    GetParamValue(xmlloader, params, Kp);
+    GetParamValue(xmlloader, params, Ki);
+    GetParamValue(xmlloader, params, Kd);
+
+    vars->pid.Set(params->Kp, params->Ki, params->Kd);
+    vars->pid.Reset();
+
 	return 1;
 }
 
@@ -118,11 +126,18 @@ bool DECOFUNC(processMultiInputData)(void * paramsPtr, void * varsPtr, QVector<Q
     short steer = 100;           // [-400, 400]
     short speed = 100;           // [-180, 180]
 
+    double dis = inputdata_0.front()->odometry;
+    double yaw = inputdata_0.front()->orientation * 4 * M_PI / (2 * M_PI + 6.14181);
+    int lsrsize = inputdata_1.front()->datasize;
+    short *lsrdata = inputdata_1.front()->data;
+
+    steer = getSteer(dis, yaw, lsrsize, lsrdata, params, vars);
+
     // Show RGB image && compass
     double ori = - ((double)steer / 400.0) * (M_PI / 2.0);
     cv::Mat img;
     inputdata_2.front()->cvColorImg.copyTo(img);
-	cv::flip(img, img, 1);
+    cv::flip(img, img, 1);
     cv::Point compass = cv::Point(100, 100);
     cv::circle(img, compass, 80, cv::Scalar(0,255,0), 1, CV_AA);
     cv::line(img, compass,
