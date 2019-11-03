@@ -18,7 +18,7 @@ private:
 
 };
 
-short getSteer(double dis, double yaw, int lsrsize, short* lsrdata,
-               ProcessorMulti_Processor_Core_Params* params, ProcessorMulti_Processor_Core_Vars* vars);
+int getSteer(double dis, double yaw, int lsrsize, short* lsrdata, double lsrunit,
+             ProcessorMulti_Processor_Core_Params* params, ProcessorMulti_Processor_Core_Vars* vars);
 
 #endif // CONTROL_H

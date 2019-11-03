@@ -19,14 +19,20 @@ bool DECOFUNC(setParamsVarsOpenNode)(QString qstrConfigName, QString qstrNodeTyp
 	2: initialize variables (vars).
 	3: If everything is OK, return 1 for successful opening and vice versa.
 	*/
-    GetParamValue(xmlloader, params, baseSteer);
-    GetParamValue(xmlloader, params, filterWindow);
     GetParamValue(xmlloader, params, Kp);
     GetParamValue(xmlloader, params, Ki);
     GetParamValue(xmlloader, params, Kd);
+    GetParamValue(xmlloader, params, baseSteer);
+    GetParamValue(xmlloader, params, straightThres);
+    GetParamValue(xmlloader, params, straightSpeed);
+    GetParamValue(xmlloader, params, infDistance);
+    GetParamValue(xmlloader, params, backwardDis);
+    GetParamValue(xmlloader, params, safeAngle);
+    GetParamValue(xmlloader, params, safeDis);
 
     vars->pid.Set(params->Kp, params->Ki, params->Kd);
     vars->pid.Reset();
+    vars->reverse = false;
 
 	return 1;
 }
@@ -130,8 +136,12 @@ bool DECOFUNC(processMultiInputData)(void * paramsPtr, void * varsPtr, QVector<Q
     double yaw = inputdata_0.front()->orientation * 4 * M_PI / (2 * M_PI + 6.14181);
     int lsrsize = inputdata_1.front()->datasize;
     short *lsrdata = inputdata_1.front()->data;
+    double lsrunit = inputparams_1.front()->unit;
 
-    steer = getSteer(dis, yaw, lsrsize, lsrdata, params, vars);
+    int ret = getSteer(dis, yaw, lsrsize, lsrdata, lsrunit, params, vars);
+    speed = ret >> 16;
+    steer = ret & 0xffff;
+    qDebug()<<speed<<' '<<steer<<endl;
 
     // Show RGB image && compass
     double ori = - ((double)steer / 400.0) * (M_PI / 2.0);
@@ -153,8 +163,8 @@ bool DECOFUNC(processMultiInputData)(void * paramsPtr, void * varsPtr, QVector<Q
     char dataput[20];
     dataput[0] = 0xF8;
     dataput[1] = 4;
-    *(short*)&dataput[2] = (short)steer;
-    *(short*)&dataput[4] = (short)speed;
+    *(short*)&dataput[2] = (short)-steer;
+    *(short*)&dataput[4] = (short)-speed;
     dataput[6] = 0x8F;
     outputdata->datagram = QByteArray(dataput, 7);
 	return 1;

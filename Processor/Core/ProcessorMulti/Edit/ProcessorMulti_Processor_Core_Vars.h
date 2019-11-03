@@ -54,6 +54,8 @@ public:
 public:
 	//*******************Please add variables below*******************
     PIDCtrl pid;
+    bool reverse;
+    double prev_odom;
 
 };
 
