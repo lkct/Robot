@@ -69,7 +69,7 @@ int getSteer(double dis, double yaw, int lsrsize, short* lsrdata, double lsrunit
     }
     short *lsrmid = lsrdata + (lsrsize - 1) / 2;
     int safeRange = params->safeAngle * 2;
-    if (min_element(lsrmid - safeRange, lsrmid + safeRange + 1) < params->safeDis || vars->reverse)
+    if (*min_element(lsrmid - safeRange, lsrmid + safeRange + 1) < params->safeDis || vars->reverse)
     {
         speed = -100;
         steer = params->baseSteer;
