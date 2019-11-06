@@ -61,12 +61,13 @@ public:
         Ki = 0;
         Kd = 10;
         baseSteer = 40;
-        straightThres = 50;
+        straightSteer = 50;
         straightSpeed = 150;
         infDistance = 20000;
         backwardDis = 50;
         safeAngle = 45;
         safeDis = 50;
+        filterWindow = 5;
     }
 	/*! \fn ~ProcessorMulti_Processor_Core_Params()
 		\brief The destructor of ProcessorMulti_Processor_Core_Params. [required]
@@ -81,12 +82,13 @@ public:
 	//*******************Please add variables below*******************
     double Kp, Ki, Kd;
     int baseSteer;
-    double straightThres;
+    double straightSteer;
     int straightSpeed;
     int infDistance;
     int backwardDis;
     double safeAngle;
     int safeDis;
+    double filterWindow;
 
 };
 

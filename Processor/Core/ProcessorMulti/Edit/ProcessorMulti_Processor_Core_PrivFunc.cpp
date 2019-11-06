@@ -23,12 +23,13 @@ bool DECOFUNC(setParamsVarsOpenNode)(QString qstrConfigName, QString qstrNodeTyp
     GetParamValue(xmlloader, params, Ki);
     GetParamValue(xmlloader, params, Kd);
     GetParamValue(xmlloader, params, baseSteer);
-    GetParamValue(xmlloader, params, straightThres);
+    GetParamValue(xmlloader, params, straightSteer);
     GetParamValue(xmlloader, params, straightSpeed);
     GetParamValue(xmlloader, params, infDistance);
     GetParamValue(xmlloader, params, backwardDis);
     GetParamValue(xmlloader, params, safeAngle);
     GetParamValue(xmlloader, params, safeDis);
+    GetParamValue(xmlloader, params, filterWindow);
 
     vars->pid.Set(params->Kp, params->Ki, params->Kd);
     vars->pid.Reset();

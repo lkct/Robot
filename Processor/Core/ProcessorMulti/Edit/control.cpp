@@ -4,6 +4,7 @@
 
 using std::replace;
 using std::min_element;
+using std::max_element;
 
 void PIDCtrl::Set(double kp, double ki, double kd)
 {
@@ -34,19 +35,20 @@ int getSteer(double dis, double yaw, int lsrsize, short* lsrdata, double lsrunit
 
     replace(lsrdata, lsrdata + lsrsize, 0, params->infDistance);
 
-    double s = 0;
-    double w = 1e-6;
-    for (int i = 0; i < lsrsize; i++)
+    int filt = params->filterWindow * 2;
+    short *newdata = new short[lsrsize];
+    for (int i = 0; i < lsrsize - filt; i++)
     {
-        s += i * lsrdata[i];
-        w += lsrdata[i];
+        newdata[i] = *min_element(lsrdata + i, lsrdata + i + filt);
     }
-    target = s * 0.5 / w;
+    target = (max_element(newdata, newdata + lsrsize - filt) - newdata + filt / 2) * 0.5;
+    delete[] newdata;
 
+    qDebug()<<target<<endl;
     err = target - 90;
     steer = vars->pid.Step(err);
 
-    if (abs(steer) < params->straightThres)
+    if (abs(steer) < params->straightSteer)
     {
         speed = params->straightSpeed;
     }
