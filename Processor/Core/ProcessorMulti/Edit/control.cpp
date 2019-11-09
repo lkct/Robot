@@ -56,7 +56,7 @@ int getSteer(double dis, double yaw, int lsrsize, short* lsrdata, double lsrunit
     {
         target -= 20;
     }
-    if (*min_element(lsrmid +filt, lsrmid + safeRange) < 100)
+    if (*min_element(lsrmid + filt, lsrmid + safeRange) < 100)
     {
         target += 20;
     }
