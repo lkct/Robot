@@ -139,6 +139,10 @@ bool DECOFUNC(processMultiInputData)(void * paramsPtr, void * varsPtr, QVector<Q
     short *lsrdata = inputdata_1.front()->data;
     double lsrunit = inputparams_1.front()->unit;
 
+    if(!lsrdata || !params || !vars)
+    {
+        return 0;
+    }
     int ret = getSteer(dis, yaw, lsrsize, lsrdata, lsrunit, params, vars);
     speed = ret >> 16;
     steer = ret & 0xffff;
