@@ -41,8 +41,25 @@ int getSteer(double dis, double yaw, int lsrsize, short* lsrdata, double lsrunit
     {
         newdata[i] = *min_element(lsrdata + i, lsrdata + i + filt);
     }
-    target = (max_element(newdata, newdata + lsrsize - filt) - newdata + filt / 2) * 0.5;
+    short *t1 = max_element(newdata, newdata + lsrsize - filt);
+    short *t2 = max_element(newdata + 180, newdata + lsrsize - filt);
+    if (*t1 == *t2)
+    {
+        t1 = t2;
+    }
+    target = 180 - (t1 - newdata + filt / 2) * 0.5;
     delete[] newdata;
+
+    short *lsrmid = lsrdata + (lsrsize - 1) / 2;
+    int safeRange = params->safeAngle * 2;
+    if (*min_element(lsrmid - safeRange, lsrmid - filt) < 100)
+    {
+        target -= 20;
+    }
+    if (*min_element(lsrmid +filt, lsrmid + safeRange) < 100)
+    {
+        target += 20;
+    }
 
     qDebug()<<target<<endl;
     err = target - 90;
@@ -51,6 +68,17 @@ int getSteer(double dis, double yaw, int lsrsize, short* lsrdata, double lsrunit
     if (abs(steer) < params->straightSteer)
     {
         speed = params->straightSpeed;
+    }
+    else
+    {
+        if (steer > 0)
+        {
+            steer += 100;
+        }
+        else
+        {
+            steer -= 100;
+        }
     }
 
     // convert to return steer
@@ -69,8 +97,6 @@ int getSteer(double dis, double yaw, int lsrsize, short* lsrdata, double lsrunit
     {
         vars->reverse = false;
     }
-    short *lsrmid = lsrdata + (lsrsize - 1) / 2;
-    int safeRange = params->safeAngle * 2;
     if (*min_element(lsrmid - safeRange, lsrmid + safeRange + 1) < params->safeDis || vars->reverse)
     {
         speed = -100;

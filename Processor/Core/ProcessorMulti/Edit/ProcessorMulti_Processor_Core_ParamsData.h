@@ -65,8 +65,8 @@ public:
         straightSpeed = 150;
         infDistance = 20000;
         backwardDis = 50;
-        safeAngle = 45;
-        safeDis = 50;
+        safeAngle = 30;
+        safeDis = 40;
         filterWindow = 5;
     }
 	/*! \fn ~ProcessorMulti_Processor_Core_Params()

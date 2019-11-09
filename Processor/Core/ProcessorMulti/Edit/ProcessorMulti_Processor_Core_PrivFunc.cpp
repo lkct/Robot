@@ -164,7 +164,7 @@ bool DECOFUNC(processMultiInputData)(void * paramsPtr, void * varsPtr, QVector<Q
     char dataput[20];
     dataput[0] = 0xF8;
     dataput[1] = 4;
-    *(short*)&dataput[2] = (short)-steer;
+    *(short*)&dataput[2] = (short)steer;
     *(short*)&dataput[4] = (short)-speed;
     dataput[6] = 0x8F;
     outputdata->datagram = QByteArray(dataput, 7);
